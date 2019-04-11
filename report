@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+
+set_time_limit(0);
+
+require __DIR__.'/vendor/autoload.php';
+
+if ($argc != 2) {
+    echo 'Add correct site URL after the command, please';
+} else {
+    $filename = $argv[1];
+    if(!preg_match('/^(http|https):\/\/[^ "]+$/', $filename))
+    {
+        $filename = 'http://'.$filename;
+    }
+    $filename = parse_url ($filename, PHP_URL_HOST );
+        var_dump($filename);
+    if(file_exists('parsed/'.$filename.'.csv')){
+        CSV::showFile('parsed/'.$filename.'.csv');
+    } else {
+        echo 'That site was not checked yet. Run parse to check it.';
+    }
+}

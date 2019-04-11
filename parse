@@ -1,0 +1,30 @@
+#!/usr/bin/env php
+<?php
+
+set_time_limit(0);
+
+require __DIR__.'/vendor/autoload.php';
+
+if ($argc != 2) {
+    echo 'Add correct site URL after the command, please';
+} else {
+    $checkingUrl = $argv[1];
+    if(!preg_match('/^(http|https):\/\/[^ "]+$/', $checkingUrl))
+    {
+        $checkingUrl = 'http://'.$checkingUrl;
+    }
+    if (filter_var($checkingUrl, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED)) {
+
+        $parser = new Parser($checkingUrl);
+
+        $parser->run();
+
+        if (CSV::write('parsed/'.$parser->host.'.csv', $parser->writeData)) {
+            echo 'parsed/'.$parser->host.'.csv';
+        } else {
+            echo 'Somwthing went wrong, try later';
+        }
+    } else {
+        echo ($checkingUrl.' is not a valid URL');
+    }
+}

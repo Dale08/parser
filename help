@@ -1,0 +1,4 @@
+#!/usr/bin/env php
+
+report - displays the analysis results for the domain to the console, accepts the required domain parameter (both with the protocol and without it).
+parse - starts the parser, accepts the required url parameter (both with the protocol and without it).
